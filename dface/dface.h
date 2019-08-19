@@ -31,7 +31,7 @@ typedef struct _point{
 }shapepoint;
 
 
-int OpenDface(dface *handle, int shapemode);
+int OpenDface(dface *h, int shapemode, char *modpath);
 int CloseDface(dface handle);
 int GetFaceBox(dface dh, char *imgfn, facebox *box);
 int GetFaceShape(dface dh, char *imgfn, int shapemode, shapepoint *shape);

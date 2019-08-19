@@ -68,24 +68,49 @@ typedef struct _dface_t {
 	int  shapemode;
 }hdface;
 
+#if defined(WIN32) || defined(_WIN64)
+# define PATHSEP '\\'
+#else
+# define PATHSEP '/'
+#endif
+
 // ----------------------------------------------------------------------------------------
 
-int OpenDface(dface *h, int shapemode) try
+int OpenDface(dface *h, int shapemode, char *modpath) try
 {
 	frontal_face_detector *detector = new frontal_face_detector();
 	*detector = get_frontal_face_detector();
 	shape_predictor *sp = new shape_predictor();
+	char modfile[1024];
+	if (modpath){
+		sprintf(modfile, "%s%c", modpath, PATHSEP);
+	} else {
+		modfile[0] = 0;
+	}
 	if (shapemode == DFACE_SHAPE5){
-	    deserialize("shape_predictor_5_face_landmarks.dat") >> *sp;
+		strcat(modfile, "shape_predictor_5_face_landmarks.dat");
+	    //deserialize("shape_predictor_5_face_landmarks.dat") >> *sp;
+	    deserialize(modfile) >> *sp;
 	} else if (shapemode == DFACE_SHAPE68){
-		deserialize("shape_predictor_68_face_landmarks.dat") >> *sp;
+		strcat(modfile, "shape_predictor_68_face_landmarks.dat");
+		//deserialize("shape_predictor_68_face_landmarks.dat") >> *sp;
+		deserialize(modfile) >> *sp;
 	} else {
 		delete detector;
 		delete sp;
 		return DFACE_ERR_SHAPE;
 	}
+	
+	if (modpath){
+		sprintf(modfile, "%s%c", modpath, PATHSEP);
+	} else {
+		modfile[0] = 0;
+	}
+	strcat(modfile, "dlib_face_recognition_resnet_model_v1.dat");
+	
     anet_type *net = new anet_type();
-    deserialize("dlib_face_recognition_resnet_model_v1.dat") >> *net;
+	//deserialize("dlib_face_recognition_resnet_model_v1.dat") >> *net;
+	deserialize(modfile) >> *net;
  
  	hdface *handle = new hdface();	   
     handle->detector = (void *)detector;
