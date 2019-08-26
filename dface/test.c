@@ -21,7 +21,7 @@ int main(int argc, char **argv)
 	strcpy(imgfn, argv[1]);
 
 	t1 = time(0);
-	if (rc = OpenDface(&dh, DFACE_SHAPE68)) {
+	if (rc = OpenDface(&dh, DFACE_SHAPE68, NULL)) {
 		printf("open dface engine error: %d\n", rc);
 		return 0;
 	}
