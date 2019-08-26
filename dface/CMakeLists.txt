@@ -11,5 +11,10 @@ endif()
 
 add_subdirectory(../dlib dlib_build)
 add_library(dface SHARED dface.cpp)
+
+if (WIN32)
+  SET_TARGET_PROPERTIES(dface PROPERTIES LINK_FLAGS /DEF:${CMAKE_SOURCE_DIR}/dface.def)
+endif()
+
 target_link_libraries(dface dlib::dlib )
 

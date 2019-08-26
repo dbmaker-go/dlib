@@ -1,0 +1,7 @@
+EXPORTS
+OpenDface @1
+CloseDface @2
+GetFaceBox @3
+GetFaceShape @4
+GetFaceVector @5
+GetFaceDistance @6
