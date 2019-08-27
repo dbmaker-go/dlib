@@ -22,3 +22,18 @@ http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
 http://dlib.net/files/dlib_face_recognition_resnet_model_v1.dat.bz2
 ```
 
+### use cmake to build on both linux and windows
+```
+cd dface
+mkdir build
+cd build
+
+// for linux or win32
+cmake ..
+cmake --build . --config Release
+
+// for win64
+cmake -G "Visual Studio 14 2015 Win64" -T host=x64 ..
+cmake --build . --config Release
+```
+
